@@ -60,7 +60,7 @@ export class PlacesService {
       dateFrom,
       dateTo,
       this.authService.userId );
-      this._places.pipe(take(1)).Subscribe(places => {
+      this._places.pipe(take(1)).subscribe(places => {
         this._places.next(places.concat(newPlace));
       });
    // this._places.push(newPlace);
