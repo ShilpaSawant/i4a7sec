@@ -110,10 +110,14 @@ export class BookingService {
     }
 
     fetchBookings() {
-        return this.htttp
-        // tslint:disable-next-line: max-line-length
-                .get<{ [key: string]: BookingData }>(`https://ionic-angular-course-64e6e.firebaseio.com/bookings.json?orderBy="userId"&equalTo="${this.authService.userId}"`)
-                .pipe(
+        return this.authService.userId.pipe(switchMap(userId => {
+            if (!userId) {
+                throw new Error('User not found');
+            }
+            return this.htttp
+            // tslint:disable-next-line: max-line-length
+                    .get<{ [key: string]: BookingData }>(`https://ionic-angular-course-64e6e.firebaseio.com/bookings.json?orderBy="userId"&equalTo="${userId}"`)
+        }),
                 map(bookingData => {
                 const bookings = [];
                 for (const key in bookingData) {
@@ -139,6 +143,6 @@ export class BookingService {
             tap(bookings => {
                 this._bookings.next(bookings);
             })
-            );
+        );
     }
 }
