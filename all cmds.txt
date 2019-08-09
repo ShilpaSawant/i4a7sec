@@ -17,6 +17,8 @@ ionic generate page places/offers/offer-bookings
 
 ionic generate page bookings
 
+ionic integrations enable capacitor
+
 change app-routing-modules.ts , routes variable
 
 run app ionic serve
